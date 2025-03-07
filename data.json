@@ -1,0 +1,29 @@
+{
+  "transactions": [
+    {
+      "date": "05/03/2025 09:54:40",
+      "amount": "-12,500",
+      "description": "CUSTOMER LE VAN SON chuyen tien - Ma giao di ch/ Trace 372542"
+    },
+    {
+      "date": "03/03/2025 09:22:41",
+      "amount": "-60,000",
+      "description": "CUSTOMER LE VAN SON chuyen tien - Ma giao di ch/ Trace 946469"
+    },
+    {
+      "date": "02/03/2025 23:25:35",
+      "amount": "+60,000",
+      "description": "CUSTOMER DOAN QUOC VIET chuyen tien. TU: DOAN QUOC VIET"
+    },
+    {
+      "date": "02/03/2025 23:25:03",
+      "amount": "-50,000",
+      "description": "CUSTOMER LE VAN SON chuyen tien - Ma giao di ch/ Trace 960017"
+    },
+    {
+      "date": "02/03/2025 16:55:01",
+      "amount": "-200,000",
+      "description": "CUSTOMER LE VAN SON chuyen tien"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+
+import { UsersModule } from 'src/modules/users/users.module';
+import { AuthModule } from 'src/modules/auth/auth.module';
+
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
+import { User } from './entities/User';
+@Module({
+  imports: [
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        type: 'mysql',
+        host: 'localhost',
+        port: 3306,
+        username: 'root',
+        password: '12345678',
+        database: 'Transactions',
+        entities: [User],
+        synchronize: true,
+      }),
+    }),
+    UsersModule,
+    AuthModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
