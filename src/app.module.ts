@@ -6,6 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 
 import { UsersModule } from 'src/modules/users/users.module';
 import { AuthModule } from 'src/modules/auth/auth.module';
+import { TransactionModule } from 'src/modules/transaction/transaction.module';
+import { Transaction } from 'src/entities/Transaction';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -22,12 +24,13 @@ import { User } from './entities/User';
         username: 'root',
         password: '12345678',
         database: 'Transactions',
-        entities: [User],
+        entities: [User, Transaction],
         synchronize: true,
       }),
     }),
     UsersModule,
     AuthModule,
+    TransactionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

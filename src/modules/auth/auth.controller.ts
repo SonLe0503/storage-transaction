@@ -1,29 +1,25 @@
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 
+import { AuthService } from 'src/modules/auth/auth.service';
+import { LocalAuthGuard } from 'src/modules/guards/local-auth.guard';
 import { UserService } from 'src/modules/users/users.service';
 
-import * as bcrypt from 'bcrypt';
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+  ) {}
 
   @Post('/signup')
   async register(@Body() userData: any) {
     return this.userService.createUser(userData);
   }
 
+  @UseGuards(LocalAuthGuard)
   @Post('/login')
-  async login(@Body() loginData: { username: string; password: string }) {
-    const user = await this.userService.getUserByUsername(loginData.username);
-    if (!user) {
-      throw new UnauthorizedException('Invalid username');
-    }
-
-    const isMatch = await bcrypt.compare(loginData.password, user.password);
-    if (!isMatch) {
-      throw new UnauthorizedException('Invalid password');
-    }
-
-    return { message: 'Login successful', user };
+  async login(@Request() request: any) {
+    return this.authService.login(request.user);
   }
 }
