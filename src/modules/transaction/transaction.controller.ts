@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Request, Get, Param } from '@nestjs/common';
 
 import { Transaction } from 'src/entities/Transaction';
 import { TransactionService } from 'src/modules/transaction/transaction.service';
@@ -23,5 +23,14 @@ export class TransactionController {
       }),
     );
     return this.transactionService.addTransaction(transactionsWithUser);
+  }
+  @UseGuards(JwtAuthGuard)
+  @Get('user/bank/:bankName')
+  async getTransactionByUserAndBank(
+    @Request() request: any,
+    @Param('bankName') bankName: string,
+  ) {
+    const userId = request.user.id
+    return this.transactionService.getTransactionByUserAndBank(userId, bankName);
   }
 }

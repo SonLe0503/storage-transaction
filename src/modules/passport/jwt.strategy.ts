@@ -8,13 +8,12 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 
 import { UserService } from 'src/modules/users/users.service';
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
+export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly userService: UserService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey:
-        '769647bb397de3101aef315e7c9e68fcb127691b622346a08b12437b5d37857b',
+      secretOrKey: process.env.JWT_SECRET,
     });
   }
   async validate(payload: any) {

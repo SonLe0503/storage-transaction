@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
@@ -12,10 +15,10 @@ import { UsersModule } from 'src/modules/users/users.module';
   imports: [
     UsersModule,
     PassportModule,
+    ConfigModule.forRoot(),
     JwtModule.register({
-      secret:
-        '769647bb397de3101aef315e7c9e68fcb127691b622346a08b12437b5d37857b',
-      signOptions: { expiresIn: '1h' },
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRE },
     }),
   ],
   controllers: [AuthController],
