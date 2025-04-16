@@ -7,6 +7,9 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
+    prefix: '/uploads',
+  });
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.enableCors();
   await app.listen(process.env.PORT ?? 2000);

@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 
 import { AuthService } from 'src/modules/auth/auth.service';
 import { LocalAuthGuard } from 'src/modules/guards/local-auth.guard';
@@ -14,6 +21,10 @@ export class AuthController {
 
   @Post('/signup')
   async register(@Body() userData: any) {
+    const user = await this.userService.findByUsername(userData.username);
+    if (user) {
+      throw new BadRequestException('Username đã tồn tại!');
+    }
     return this.userService.createUser(userData);
   }
 

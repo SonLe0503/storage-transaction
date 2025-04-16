@@ -6,6 +6,8 @@ import { UsersModule } from 'src/modules/users/users.module';
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { TransactionModule } from 'src/modules/transaction/transaction.module';
 import { Transaction } from 'src/entities/Transaction';
+import { TransactionType } from 'src/entities/TransactionType';
+import { TransactionTypeModule } from 'src/modules/transactionType/transactionType.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -22,14 +24,16 @@ import { User } from './entities/User';
         username: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_NAME,
-        entities: [User, Transaction],
-        synchronize: true,
+        entities: [User, Transaction, TransactionType],
+        synchronize: false,
       }),
     }),
     UsersModule,
     AuthModule,
     TransactionModule,
+    TransactionTypeModule,
   ],
+
   controllers: [AppController],
   providers: [AppService],
 })

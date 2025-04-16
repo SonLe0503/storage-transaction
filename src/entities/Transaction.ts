@@ -19,4 +19,7 @@ export class Transaction {
 
   @Column()
   userId: number;
+
+  @Column({ default: false })
+  isHandled: boolean;
 }
