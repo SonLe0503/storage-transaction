@@ -26,7 +26,19 @@ export class UserService {
     user.password = hashedPassword;
     return this.userRepository.save(user);
   }
-  async getUserByUsername(username: string): Promise<User | null> {
+  async findByUsername(username: string): Promise<User | null> {
     return this.userRepository.findOne({ where: { username } });
+  }
+
+  async validateUser(username: string, password: string): Promise<User | null> {
+    const user = await this.findByUsername(username);
+    if (!user) {
+      return null;
+    }
+    const status = await bcrypt.compare(password, user.password);
+    if (status) {
+      return user;
+    }
+    return null;
   }
 }
